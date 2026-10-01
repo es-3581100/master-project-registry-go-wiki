@@ -1,0 +1,13 @@
+{{define "head"}}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{if .Project}}{{.Project.Title}} · {{end}}{{.Config.SiteTitle}}</title>
+<link rel="stylesheet" href="{{if .Static}}{{if .Project}}../{{end}}{{end}}assets/style.css">
+</head><body class="{{if .Static}}static-build{{end}}">
+<div id="static-gate" class="gate hidden"><div class="gate-panel"><div class="eyebrow">SHA-256 ACCESS GATE</div><h1>{{.Config.SiteTitle}}</h1><p>This static deployment is gated for casual access. Hidden/private records are not exported.</p><form id="gate-form"><label>Password<input id="gate-password" type="password" autocomplete="current-password" autofocus></label><button type="submit">Enter Registry</button><p id="gate-error" class="error"></p></form></div></div>
+<div id="site-shell" class="site-shell {{if .StaticGate}}locked{{end}}">
+<header class="topbar"><a class="brand" href="{{if .Static}}{{if .Project}}../{{end}}{{else}}/{{end}}">MASTER PROJECT REGISTRY</a><nav><a href="{{if .Static}}{{if .Project}}../{{end}}{{else}}/{{end}}">INDEX</a>{{if not .Static}}<a href="/admin">ADMIN</a>{{end}}</nav></header>
+{{end}}
+{{define "foot"}}
+<footer><span>© 2026 {{.Config.Owner}}</span><span class="mono">local-first · catalog → static wiki</span></footer></div>
+<script src="{{if .Static}}{{if .Project}}../{{end}}{{end}}assets/app.js"></script>{{if .Static}}<script src="{{if .Project}}../{{end}}assets/gate.js"></script>{{end}}</body></html>
+{{end}}

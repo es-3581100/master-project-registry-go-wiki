@@ -1,0 +1,9 @@
+{{define "project"}}{{template "head" .}}
+<main class="page project-page"><a class="back" href="{{if .Static}}../index.html{{else}}/{{end}}">← registry</a>
+<article class="project-detail glass"><div class="eyebrow">{{.Project.Family}} / {{.Project.Kind}}</div><div class="title-row"><h1>{{.Project.Title}}</h1><span class="status {{statusClass .Project.Status}}">{{.Project.Status}}</span></div>
+{{if .Project.Summary}}<p class="lede">{{.Project.Summary}}</p>{{end}}
+<dl><dt>ID</dt><dd>{{.Project.ID}}</dd><dt>Path</dt><dd>{{if .Project.Path}}<code>{{.Project.Path}}</code>{{else}}—{{end}}</dd><dt>Source</dt><dd>{{.Project.Source}}</dd><dt>Deploy</dt><dd>{{if .Project.HiddenFromDeploy}}hidden from static export{{else}}eligible for static export{{end}}</dd><dt>Proprietary</dt><dd>{{if .Project.Proprietary}}yes{{else}}no{{end}}</dd></dl>
+{{if .Project.Tags}}<div class="tags">{{range .Project.Tags}}<span>{{.}}</span>{{end}}</div>{{end}}
+{{if .Project.Notes}}<section class="notes"><h2>Notes</h2><p>{{.Project.Notes}}</p></section>{{end}}
+<div class="actions">{{if .Project.RepoURL}}<a class="button" href="{{.Project.RepoURL}}">Repository ↗</a>{{end}}{{if .Project.SiteURL}}<a class="button" href="{{.Project.SiteURL}}">Live site ↗</a>{{end}}{{if not .Static}}<a class="button" href="/admin/edit?slug={{.Project.Slug}}">Edit local record</a>{{end}}</div>
+</article></main>{{template "foot" .}}{{end}}

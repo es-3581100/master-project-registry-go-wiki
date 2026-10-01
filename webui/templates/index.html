@@ -1,0 +1,14 @@
+{{define "index"}}{{template "head" .}}
+<main class="page">
+<section class="hero glass"><div class="eyebrow">PERSONAL R&D / WIKI INDEX</div><h1>{{.Config.SiteTitle}}</h1><p class="lede">One registry for projects, repositories, experiments, worlds, tools, and retired branches.</p>
+<div class="hero-meta"><span>{{len .Projects}} RECORDS</span><span>{{len .Families}} FAMILIES</span><span>STATIC EXPORT SAFE</span></div></section>
+<section class="controls glass"><input id="search" type="search" placeholder="Search title, path, tags, family…"><select id="family-filter"><option value="">All families</option>{{range .Families}}<option>{{.}}</option>{{end}}</select><select id="status-filter"><option value="">All statuses</option>{{range .Statuses}}<option>{{.}}</option>{{end}}</select><label class="check"><input id="show-retired" type="checkbox" checked> show retired</label></section>
+<section id="project-grid" class="project-grid">
+{{range .Projects}}<article class="project-card glass" data-search="{{.Title}} {{.Family}} {{.Status}} {{.Path}} {{join .Tags " "}}" data-family="{{.Family}}" data-status="{{.Status}}">
+<div class="card-line"><span class="eyebrow">{{.Family}}</span><span class="status {{statusClass .Status}}">{{.Status}}</span></div>
+<h2><a href="{{if $.Static}}projects/{{.Slug}}.html{{else}}/project/{{.Slug}}{{end}}">{{.Title}}</a></h2>
+{{if .Summary}}<p>{{.Summary}}</p>{{else}}<p class="muted">{{if .Path}}{{.Path}}{{else}}{{.Kind}}{{end}}</p>{{end}}
+<div class="card-meta"><span>{{.Kind}}</span>{{if .RepoURL}}<a href="{{.RepoURL}}">repo ↗</a>{{end}}{{if .SiteURL}}<a href="{{.SiteURL}}">site ↗</a>{{end}}</div>
+</article>{{end}}
+</section>
+</main>{{template "foot" .}}{{end}}

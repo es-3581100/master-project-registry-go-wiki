@@ -1,0 +1,15 @@
+{{define "admin-edit"}}{{template "head" .}}
+<main class="page"><a class="back" href="/admin">← admin</a><section class="glass edit-panel"><div class="eyebrow">LOCAL RECORD EDITOR</div><h1>{{if .Project.Title}}Edit {{.Project.Title}}{{else}}New project{{end}}</h1>
+<form class="edit-form" method="post" action="/admin/save">
+<input type="hidden" name="id" value="{{.Project.ID}}"><label>Title<input name="title" value="{{.Project.Title}}" required></label><label>Slug<input name="slug" value="{{.Project.Slug}}" placeholder="auto from title"></label>
+<label>Family<input name="family" value="{{.Project.Family}}" list="families"><datalist id="families">{{range .Families}}<option value="{{.}}">{{end}}</datalist></label>
+<label>Status<select name="status">{{$s:=.Project.Status}}{{range (printf "active
+incubation
+paused
+idea
+retired
+archived" | splitLines)}}<option {{if eq . $s}}selected{{end}}>{{.}}</option>{{end}}</select></label>
+<label>Kind<input name="kind" value="{{.Project.Kind}}"></label><label>Local / repo path<input name="path" value="{{.Project.Path}}"></label><label>Repository URL<input name="repoURL" value="{{.Project.RepoURL}}"></label><label>Site URL<input name="siteURL" value="{{.Project.SiteURL}}"></label><label>Tags (comma separated)<input name="tags" value="{{join .Project.Tags ", "}}"></label><label>Source<input name="source" value="{{.Project.Source}}"></label>
+<label class="wide">Summary<textarea name="summary" rows="3">{{.Project.Summary}}</textarea></label><label class="wide">Notes<textarea name="notes" rows="6">{{.Project.Notes}}</textarea></label>
+<label class="check"><input type="checkbox" name="hiddenFromDeploy" {{if .Project.HiddenFromDeploy}}checked{{end}}> Hide from static deployment</label><label class="check"><input type="checkbox" name="proprietary" {{if .Project.Proprietary}}checked{{end}}> Proprietary / never export</label>
+<div class="wide"><button type="submit">Save record</button></div></form></section></main>{{template "foot" .}}{{end}}
